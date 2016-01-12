@@ -1,21 +1,32 @@
-/* h1, h2, h3, h4, h5 { */
-/*   font-family: Triplicate C3p; */
-/* } */
-
-/* body { */
-/*   font-family: Triplicate T3p; */
-/* } */
-
-p {
+.reveal p {
   text-align: left;
+  line-height: 1.1;
 }
 
-li {
+.reveal li {
   text-align: left;
+  line-height: 1.1;
+}
+
+.reveal {
+  background-color: #002b36;
+  font-family: Triplicate T4p;
+}
+
+.reveal h1 {
+   font-family: Triplicate C4p;
+}
+
+.reveal h2 {
+   font-family: Triplicate C4p;
+}
+
+.reveal h3 {
+   font-family: Triplicate C4p;
 }
 
 .reveal pre {
-  font-family: Triplicate T3p;
+  font-family: Triplicate T4c;
 }
 .reveal code {
   font-family: Triplicate T4c;

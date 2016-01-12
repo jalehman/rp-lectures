@@ -29,9 +29,8 @@ f(x)=x^2
 
 + In /Mathematics/, a function describes /what/ its result is, but not
   how to find it.
-+ In /Computer Programming/, a function describes /how/ to compute a result, but
++ In /Computer Programming/, a function describes /how/ to find a result, but
   not necessarily the significance of the result.
-  + This is why naming is important.
 
 ** Anatomy of a Function
 
@@ -126,7 +125,6 @@ Functions can have many arguments! You've already seen this with =console.log(1,
 * Naming and Arguments
 
 #+begin_src javascript
-// These three functions all do the same thing:
 function sandwich(monkey, joe) {
   return monkey + joe;
 }
@@ -143,13 +141,13 @@ addTwoNumbers(2,3); // => 5
 add(2,3); // => 5
 #+end_src
 
-Which function would you rather use? Some rules of thumb:
+Some rules of thumb:
 
 + Function names should describe what the function does
 + Arguments should describe /what/ the arguments should be so long as the name
   is /helpful/
 
-* Function arguments as Symbols
+* Function Arguments as Symbols
 
 Function arguments are /symbols/: they represent the values that the function is
 invoked with.
@@ -215,12 +213,13 @@ given context, and forgetting information that is irrelevant in that context.
 #+begin_src javascript
 // JavaScript
 "Hello, World!"
-// Binary
+// Binary representation of the above string
 01001000 01100101 01101100 01101100 01101111 00101100 00100000 01010111 01101111 01110010 01101100 01100100 00100001
+// If we wrote programs in binary...well, you get the idea.
 #+end_src
 
-Functions are our principal form of /abstraction/ -- they let us talk about
-underlying ideas rather than implementation details.
++ Functions are our principal form of /abstraction/
+  + They let us talk about underlying ideas rather than implementation details.
 
 ** Example
 
@@ -228,7 +227,7 @@ Let's /refactor/ the following code using functions to keep from repeating
 ourselves (solutions [[https://github.com/jalehman/rp-lectures/blob/master/functions/example/refactor-solutions.js][here]]):
 
 #+begin_src javascript
-  // 1. Compute the sum of squares up to `n`, where n is 10.
+  // 1. Compute the sum of squares up to 10.
   var n = 10;
   var i = 0;
   var result = 0;
