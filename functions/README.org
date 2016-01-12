@@ -225,7 +225,7 @@ underlying ideas rather than implementation details.
 ** Example
 
 Let's /refactor/ the following code using functions to keep from repeating
-ourselves:
+ourselves (solutions [[https://github.com/jalehman/rp-lectures/blob/master/functions/example/refactor-solutions.js][here]]):
 
 #+begin_src javascript
   // 1. Compute the sum of squares up to `n`, where n is 10.
@@ -248,5 +248,3 @@ ourselves:
   }
   console.log(result);
 #+end_src
-
-See [[example/refactor-solutions.js][here]] for some solutions.
