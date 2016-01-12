@@ -1,0 +1,22 @@
+/* h1, h2, h3, h4, h5 { */
+/*   font-family: Triplicate C3p; */
+/* } */
+
+/* body { */
+/*   font-family: Triplicate T3p; */
+/* } */
+
+p {
+  text-align: left;
+}
+
+li {
+  text-align: left;
+}
+
+.reveal pre {
+  font-family: Triplicate T3p;
+}
+.reveal code {
+  font-family: Triplicate T4c;
+}

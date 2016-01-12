@@ -1,0 +1,251 @@
+#+TITLE: Functions
+#+EMAIL: jlehman@fastmail.com
+#+REVEAL_EXTRA_CSS: ./functions.extra.css
+# #+REVEAL_HEAD_PREAMBLE:
+#+REVEAL_ROOT: https://cdn.jsdelivr.net/reveal.js/3.0.0/
+#+OPTIONS: toc:nil reveal_slide_number:nil num:nil
+#+REVEAL_TRANS: linear
+
+* What are "functions"?
+
+A /function/ is a section of code that performs a specific task.
+
++ We often give functions /names/ (just like variables)
++ Functions often have /parameters/ as input, and
++ Often yield a /result/
+
+** Back to Math Class!
+
+You may remember talking about functions in math classes. Does this look
+familiar?
+
+\begin{equation}
+f(x)=x^2
+\end{equation}
+
++ =ƒ= is the /name/, =x= is a /parameter/
++ *What is ƒ(4)?*
+
+** Differences in Definition
+
++ In /Mathematics/, a function describes /what/ its result is, but not
+  how to find it.
++ In /Computer Programming/, a function describes /how/ to compute a result, but
+  not necessarily the significance of the result.
+  + This is why naming is important.
+
+** Anatomy of a Function
+
+#+begin_src javascript
+  // Two ways to write the same thing (don't worry about the difference yet):
+  // function *declaration*
+  function square(x) {
+    // this is called the *body* of the function.
+    return x * x;
+  }
+
+  // function *expression*
+  var square = function(x) {
+    return x * x;
+  };
+#+end_src
+
++ =square= is the /name/ of the function
++ =x= is an /argument/ (or /parameter/) to =square=
++ =x * x= is /how/ to compute the square
++ =return= specifies what the /result/ of the function is
+
+** How do we use it?
+
+#+begin_src javascript
+  function square(x) {
+    return x * x;
+  }
+
+  square;
+  // function square(x) { return x * x }
+  square(4);
+  // 16
+#+end_src
+
+To make a function do stuff, we *invoke* it. To invoke a function:
+
++ Write the name of the function
++ Write an open parenthesis: =(=
++ Specify arguments separated by commas (if there should be any)
++ Write a close parenthesis: =)=
+
+* Different Sorts of Functions
+
+** Without Parameters
+
+#+begin_src javascript
+// Functions don't need arguments
+function helloWorld() {
+  return "Hello, World!";
+}
+helloWorld();
+// "Hello, World!"
+#+end_src
+
+Because this function doesn't specify (or need) any arguments, we don't pass it
+any -- but we invoke it the same way:
+
++ Write the function name
++ Open parenthesis
++ There are no arguments, so we write nothing
++ Close parenthesis
+
+** Without a Result
+
+#+begin_src javascript
+function hello(soAndSo) {
+  console.log("Hello, " + soAndSo + "!");
+}
+hello("World");
+// Hello, World // => this is the console output
+// undefined // => this is the return value (or lack thereof)
+#+end_src
+
+*NOTE:* This function is said to have /side-effects/, because it does something
+outside of its /scope/ (we'll come back this in the future) other than returning
+a result.
+
+** With Multiple Arguments
+
+#+begin_src javascript
+function add(a, b) {
+  return a + b;
+}
+add(1, 2);
+// 3
+#+end_src
+
+Functions can have many arguments! You've already seen this with =console.log(1,
+"two")=.
+
+* Naming and Arguments
+
+#+begin_src javascript
+// These three functions all do the same thing:
+function sandwich(monkey, joe) {
+  return monkey + joe;
+}
+
+function addTwoNumbers(numberOne, numberTwo) {
+  return numberOne + numberTwo;
+}
+
+function add(a, b) {
+  return a + b;
+}
+sandwich(2,3); // => 5
+addTwoNumbers(2,3); // => 5
+add(2,3); // => 5
+#+end_src
+
+Which function would you rather use? Some rules of thumb:
+
++ Function names should describe what the function does
++ Arguments should describe /what/ the arguments should be so long as the name
+  is /helpful/
+
+* Function arguments as Symbols
+
+Function arguments are /symbols/: they represent the values that the function is
+invoked with.
+
+What other examples can you think of where we represent things with symbols?
+
+** An example
+
+#+begin_src javascript
+function divide(x, y) {
+  return x / y;
+}
+divide(add(5,4), 3);
+// 3
+#+end_src
+
+When we invoke =divide= with arguments =add(5,4)= and =3=, you can think of these
+steps taking place:
+
+** 1. Evaluate the arguments
+
+#+begin_src javascript
+// add(5,4) => 9
+// 3 => 3
+divide(9, 3);
+#+end_src
+
+** 2. Substitution of arguments
+
+#+begin_src javascript
+function divide(x, y) {
+  // x: 9
+  // y: 3
+  return x / y; // => 9 / 3
+}
+#+end_src
+
+Substitute occurrences of the arguments in the body with their values.
+
+** 3. Obtain the result
+
+#+begin_src javascript
+function divide(x, y) {
+  return x / y;
+}
+divide(9, 3); // => 3
+#+end_src
+
+Note that the order of arguments is important! =divide(3,9)= is completely
+different!
+
+* Why Functions are Important, by Example
+
+#+begin_quote
+The essence of abstractions is preserving information that is relevant in a
+given context, and forgetting information that is irrelevant in that context.
+
+-John V. Guttag
+#+end_quote
+
+** Abstraction
+
+#+begin_src javascript
+// JavaScript
+"Hello, World!"
+// Binary
+01001000 01100101 01101100 01101100 01101111 00101100 00100000 01010111 01101111 01110010 01101100 01100100 00100001
+#+end_src
+
+Functions are our principal form of /abstraction/ -- they let us talk about
+underlying ideas rather than implementation details.
+
+** Example
+
+Let's /refactor/ the following code using functions to keep from repeating
+ourselves:
+
+#+begin_src javascript
+  // 1. Compute the sum of squares up to `n`, where n is 10.
+  var n = 10;
+  var i = 0;
+  var result = 0;
+  while (i < n) {
+    result = result + (i * i);
+    i++;
+  }
+  console.log(result);
+
+  // 2. How about the sum of cubes of even numbers up to 10?
+  n = 10;
+  i = 0;
+  result = 0;
+  while (i < n) {
+    result = result + (i * i * i);
+    i = i + 2;
+  }
+  console.log(result);
+#+end_src
