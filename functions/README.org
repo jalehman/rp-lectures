@@ -1,7 +1,6 @@
 #+TITLE: Functions
 #+EMAIL: jlehman@fastmail.com
 #+REVEAL_EXTRA_CSS: ./functions.extra.css
-# #+REVEAL_HEAD_PREAMBLE:
 #+REVEAL_ROOT: https://cdn.jsdelivr.net/reveal.js/3.0.0/
 #+OPTIONS: toc:nil reveal_slide_number:nil num:nil
 #+REVEAL_TRANS: linear
@@ -249,3 +248,5 @@ ourselves:
   }
   console.log(result);
 #+end_src
+
+See [[example/refactor-solutions.js][here]] for some solutions.
