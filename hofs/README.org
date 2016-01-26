@@ -1,0 +1,266 @@
+#+TITLE: Higher Order Functions
+#+EMAIL: jlehman@fastmail.com
+#+REVEAL_EXTRA_CSS: ../base.extra.css
+#+REVEAL_ROOT: https://cdn.jsdelivr.net/reveal.js/3.0.0/
+#+OPTIONS: toc:nil reveal_slide_number:nil num:nil
+#+REVEAL_TRANS: linear
+
+* Brief Review of Functions
+
+*functions* are blocks of code that perform some task when /invoked/.
+
++ Can accept parameters (usually do)
++ Can return values (usually do)
+
+** Named functions
+
+#+begin_src javascript
+// Function expression
+var increment = function(x) {
+  return x + 1;
+}
+// Function declaration
+function increment(x) {
+  return x + 1;
+}
+#+end_src
+
++ Two ways of naming functions
+  + Mostly equivalent
+
+** Anonymous Functions
+
+#+begin_src javascript
+// Named function
+function logHello() {
+  console.log("Hello!");
+}
+someElement.addEventListener('click', logHello);
+
+// Anonymous function
+someElement.addEventListener('click', function() {
+  console.log("Hello!");
+});
+#+end_src
+
++ Use an *anonymous* function when:
+  + Unlikely to reuse function again
+  + Its purpose is clear without a name
++ Use a *named* function when:
+  + The function is likely to be reused
+  + Naming aids in clarity
+
+* What's so special about Higher Order Functions?
+
++ *Expressive Power*
+  + Write programs that express our ideas more clearly
++ *Declarative v. Imperative*
+  + /what/ versus /how/
+
+** First-class
+
+Something is /first class/ in a language if it can be:
+
+1. Named by variables
+2. Passed as an argument to a function
+   + Function arguments are often called /callbacks/
+3. Returned as the result of a function
+4. Included in data structures
+
+** What kinds of things are first-class?
+
+#+begin_src javascript
+// NUMBERS
+var a = 5; // 1. named by a variable
+
+square(7); // 2. passed as an argument to a function
+
+function square(x) {
+  return x * x; // 3. returned as the result of a function
+}
+
+var nums = [0,1,2,3,4]; // 4. included in data structures
+#+end_src
+
++ Numbers are first-class
+  + Primitives (numbers, strings, booleans), arrays, objects
++ /functions/ are first-class
+
+** First-class Functions
+
+#+begin_src javascript
+// 1. named by a variable
+var logTick = function() {
+  console.log("Tick");
+}
+// 2. passed as an argument to a function
+setInterval(logTick, 1000);
+function add(a) {
+  // 3. returned as the result of a function
+  return function(b) {
+    return a + b;
+  }
+}
+
+function makeChores(chores) {
+  var _chores = chores;
+  return {
+    // 4. included in data structures
+    doChore: function() {
+      return _chores.pop();
+    }
+  }
+}
+#+end_src
+
+** Higher order Functions
+
+A function is considered *higher order* if it satisfies /at least/ one of:
+
+1. Takes a function as an argument
+2. Returns a function as the result
+
+#+begin_src javascript
+function compose(f, g) {
+  return function(x) {
+    return f(g(x));
+  }
+}
+function greet(name) { return "hi: " + name; }
+function exclaim(statement) { return statement.toUpperCase() + "!"; }
+
+var greetAndExclaim = compose(greet, exclaim);
+greetAndExclaim("class");
+#+end_src
+
+** Event Listeners
+
+
+#+begin_src javascript
+var button = document.getElementById("theButton");
+button.addEventListener('click', function() { // the callback
+  console.log("You clicked theButton!");
+});
+#+end_src
+
++ ~addEventListener~ is a higher order function
+  + Why?
++ It calls its callback /after/ the event is triggered
++ This is called *asynchronous*
+
+
+* What is meant by "expressive"?
+
+The /expressivity/ of a language is measured by:
++ Ability for the programmer to translate ideas into code
++ Ease with which a programmer can communicate underlying ideas to others
+
+** Why is this important?
+
++ Expressive languages allow us to write *declarative* code
+  + Allows the program to describe /what/ it is doing
+  + Makes for "self-documenting" code
+
+** Which is more expressive?
+
+#+begin_src javascript
+var nums = [2, 17, 8, 27, 13];
+function logSquare(x) {
+  console.log(x * x);
+}
+// Imperative
+for (var i = 0; i < nums.length; i++) {
+  logSquare(nums[i]);
+}
+// Declarative
+nums.forEach(logSquare);
+#+end_src
+
++ Loops are /imperative/ in nature
+  + Describes /how/ to do something
++ ~forEach~ is /declarative/
+  + Describes /what/ is being done
+  + This is *greater expressive power*
+
+* Example: Find Matching Elements in an Array
+
+1. Find the strings with lengths longer than 5
+2. Find the /even/ numbers in an array
+
+** Naive Approach
+
+#+begin_src javascript
+// 1. Strings longer than 5
+function stringsLongerThanFive(array) {
+  var results = [];
+  array.forEach(function(s) {
+    if (s.length > 5) {
+      results.push(s);
+    }
+  });
+  return results;
+}
+// 2. Even numbers
+function evenNumbers(array) {
+  var results = [];
+  array.forEach(function(n) {
+    if (n % 2 === 0) {
+      results.push(n);
+    }
+  });
+  return results;
+}
+#+end_src
+
+** The Algorithm
+
+#+begin_src javascript
+// for reference
+function evenNumbers(array) {
+  var results = [];
+  array.forEach(function(n) {
+    if (n % 2 === 0) {
+      results.push(n);
+    }
+  });
+  return results;
+}
+#+end_src
+
+1. Create a ~results~ array to store matching elements
+2. For each element in the array:
+   1. *IF* some condition is true, add the element to ~results~
+   2. Otherwise do nothing
+3. Return the results
+
+** Filter
+
+#+begin_src javascript
+function filter(array, predicate) {
+  var results = [];
+  array.forEach(function(x) {
+    if (predicate(x)) {
+      results.push(x);
+    }
+  });
+  return results;
+}
+#+end_src
+
++ A *predicate* is a function that returns ~true~ or ~false~
+
+** Expert Approach
+
+#+begin_src javascript
+var luckyNumbers = [1, 25, 14, 98, 2];
+var animals = ["monkey", "giraffe", "cat", "dog", "kangaroo"];
+// 1. strings longer than 5 characters
+filter(animals, function(s) { return s.length > 5; }
+// 2. even numbers
+filter(luckyNumbers, function(x) { return x % 2 === 0; }
+#+end_src
+
++ Capture the /pattern/ of filtering
++ Only specifies the /unique/ part of the problem
++ Programmers know the purpose of ~filter~
+  + Code is clear and expresses its intent
